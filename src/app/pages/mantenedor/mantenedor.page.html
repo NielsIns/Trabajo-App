@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>mantenedor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>    
+    <ion-item>
+      <ion-label position="fixed">Rut</ion-label>
+      <ion-input [(ngModel)]="persona.rut" type="text" placeholder="ingrese rut"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed">Nombre</ion-label>
+      <ion-input [(ngModel)]="persona.nombre" type="text" placeholder="ingrese nombre"></ion-input>
+    </ion-item>
+
+    <ion-button (click)="registrar()" expand="full">Registrar</ion-button>
+    <ion-button (click)="modificar()" expand="full">Modificar</ion-button>
+  </ion-card>
+
+  <h1>INFO PERSONAS</h1>
+  <ion-list *ngFor="let p of personas">
+    <ion-item (click)="buscar(p.rut)">
+      <p>Rut: {{p.rut}} - Nombre: {{p.nombre}}</p>
+      <ion-button (click)="eliminar(p.rut)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- COMO CARGAR DATOS DE UNA LISTA EN UN SELECT: -->
+  <ion-item>
+    <ion-label position="stacked">Personas</ion-label>
+    <ion-select >
+      <ion-select-option *ngFor="let p of personas" value="{{p.rut}}">{{p.nombre}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+</ion-content>

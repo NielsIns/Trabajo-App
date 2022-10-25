@@ -1,0 +1,80 @@
+
+
+
+<ion-content class="ion-content-1 ic-2" style="justify-content: center; ">
+  
+
+  <div style="display: flex; align-items: none; align-content: center; flex-direction: column;">
+    <ion-card>
+      <ion-card-header>
+        <div style="flex-direction: column;">
+          <div style=" display:flex ;justify-content: center; align-items: center; margin-top:4%; margin-bottom: 3%;">
+            <img  alt="logo" src="../../../assets/img/student-card.png" style="width: 30%; height: 30%;">
+          </div>
+          <!--agregar interpolacion de nombre-->
+          <span style="margin-bottom: 2%; margin-top: 3%">
+            <ion-title style="text-align: center;">Alumno</ion-title>
+          </span>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <span class="padding-a">
+          
+            
+              <ion-button expand="full" color="dark" (click)="comenzarAlert(true)" >
+                Comenzar clase
+              </ion-button>
+                
+          
+        </span>
+        <ion-modal  [backdropDismiss]="false" *ngIf="comenzar_clase" [isOpen]="isModalOpen">
+          <ion-backdrop> 
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Ingresa a tu clase</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="close_bd(false)">Close</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content style="text-align: -webkit-center; ">
+                <section style="text-align: center; margin-top: 100px !important; display:flex; align-items: center; align-content: center; justify-content: center; flex-direction: column; margin-bottom: 1px !important; width: 100% !important;">
+                  <ion-item>
+                    <ion-label>
+                      Ingrese código :
+                    </ion-label>
+                    <ion-input placeholder="Escriba el código" [(ngModel)]="cod_asistencia_alumno">
+                    </ion-input>
+                  </ion-item>
+                  
+                </section>
+                <section style="width: 0%">
+                  <ion-button class="button-color" style="text-align: center" expand="full" (click)="verificarCodigo()">
+                    <ion-icon name="paper-plane-outline"></ion-icon>
+                    Enviar
+                  </ion-button>
+                  <ion-button class="button-color" style="text-align: center" expand="full" >
+                    <ion-icon name="camera-outline"></ion-icon>Cámara
+                  </ion-button>
+                  
+                  
+                  <h1 style="font-size: bold; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">La clase ha comenzado!</h1>
+                </section>
+              </ion-content>
+              
+              
+            </ng-template>
+          </ion-backdrop>
+        </ion-modal>
+        
+      </ion-card-content>
+    </ion-card>
+  
+  </div>
+  
+</ion-content>
+
+  
+
+

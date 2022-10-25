@@ -1,0 +1,448 @@
+
+<ion-content class="ion-content-1 ic-2 ion-content-admin">
+  
+  <div style="display: flex !important; align-items: center !important; align-content: center !important; justify-content: center !important;">
+    <ion-card >
+      <ion-card-header>
+        <div style="flex-direction: column;">
+          <div style=" display:flex ;justify-content: center; align-items: center; margin-top:4%;">
+            <img  alt="logo" src="../../../assets/img/clipboard.png" style="width: 40%; height: 40%;">
+          </div>
+          <!--agregar interpolacion de nombre-->
+          
+          <span style=" margin-top: 10%">
+            <ion-title style="text-align: center;">Administrador</ion-title>
+          </span>
+        </div>
+      </ion-card-header>
+      <ion-item></ion-item>
+      <ion-card-content>
+        <span style=" flex-direction:column; align-items: center !important;">
+
+          
+            <ion-button style="font-size: small;" color="dark" expand="full"  (click)="agregarAsignaturas(true)"><ion-icon name="add-circle-outline"></ion-icon> Agregar Asignatura</ion-button>
+            
+
+            <ion-button style="font-size: small;" color="dark" expand="full"  (click)="agregarUser(true)"><ion-icon name="person-add-outline"></ion-icon> Agregar Usuario</ion-button>
+            
+          
+            <ion-button style="font-size: small;" color="dark" expand="full"  (click)="listar_asignaturas()">Listar asignaturas</ion-button>
+            
+            
+            <ion-button style="font-size: small;" color="dark" expand="full"  (click)="listar_alumnos()">Listar alumnos</ion-button>
+          
+          
+            <ion-button style="font-size: small;" color="dark" expand="full"  (click)="listar_profesores()">Listar profesores</ion-button>
+         
+          
+            <ion-button style="font-size: small;" color="dark" expand="full"  (click)="listar_administradores()">Listar administradores</ion-button>
+          
+        </span>
+        <div class="padding-a" >
+          
+          <section *ngIf="mostrar_lista_profesores " style="display:flex;text-align: center; margin-top: 3%; flex-direction: column;">
+            <h1>Lista de profesores</h1>
+            <ion-list *ngFor="let persona of personas">
+              <article *ngIf="persona.tipo_usuario=='profesor'" style="display: flex; flex-direction: row;">
+  
+                <span>
+                  <p>Email: {{persona.email}}- Rut: {{persona.rut}} - Nombre Completo: {{persona.nombre}} {{persona.ap_paterno}}</p>
+                  <p>Fecha nacimiento: {{persona.fecha_nac}}</p>
+                <span >
+                    <ion-button color="warning" id="open-modal" (click)="buscar(persona.rut, true)">Buscar</ion-button>
+                    <ion-button color="danger" (click)="testeoSheet(persona.rut)">Eliminar</ion-button>
+                  </span>
+                </span>
+              </article>
+            </ion-list>
+          </section>
+          <section *ngIf="mostrar_lista_alumnos " style="display:flex;text-align: center; margin-top: 3%; flex-direction: column;">
+            <h1>Lista de alumnos</h1>
+            <ion-list *ngFor="let persona of personas">
+              <article *ngIf="persona.tipo_usuario=='alumno'">
+                <span>
+                  <p>Email: {{persona.email}}- Rut: {{persona.rut}} - Nombre Completo: {{persona.nombre}} {{persona.ap_paterno}}</p>
+                    <p>Fecha nacimiento: {{persona.fecha_nac}} -  Semestre:{{persona.semestre}}</p>
+                  <span >
+                    <ion-button color="warning" id="open-modal" (click)="buscar(persona.rut, true)">Buscar</ion-button>
+                    <ion-button color="danger" (click)="testeoSheet(persona.rut)">Eliminar</ion-button>
+                  </span>
+                </span>
+              </article>
+            </ion-list>
+          </section>
+          <section *ngIf="mostrar_lista_administradores " style="display:flex;text-align: center; margin-top: 3%; flex-direction: column;">
+            <h1>Lista de administradores</h1>
+            <ion-list *ngFor="let persona of personas">
+              <article *ngIf="persona.tipo_usuario=='administrador'">
+                <span *ngIf="persona.rut != usuario.rut">
+                  <span>
+                    <p>Email: {{persona.email}}- Rut: {{persona.rut}} - Nombre Completo: {{persona.nombre}} {{persona.ap_paterno}}</p>
+                    <p>Fecha nacimiento: {{persona.fecha_nac}}</p>
+                    <span >
+                      <ion-button color="warning" id="open-modal" (click)="buscar(persona.rut, true)">Buscar</ion-button>
+                      <ion-button color="danger" (click)="testeoSheet(persona.rut)">Eliminar</ion-button>
+                    </span>
+                  </span>
+                </span>
+  
+              </article>
+            </ion-list>
+          </section>
+          <section *ngIf="mostrar_lista_asignaturas " style="display:flex;text-align: center; margin-top: 3%; flex-direction: column;">
+            <h1>Lista de asignaturas</h1>
+            <ion-list *ngFor="let asig of asignaturas">
+                <span>
+                  <span>
+                    <p>Código asignatura: {{asig.codigo_asig}}- Nombre asignatura: {{asig.nom_asig}} - Sigla asignatura: {{asig.sigla_asig}}</p>
+                    <p>Semestre: {{asig.semestre}}</p>
+                    <p>Profesor: {{asig.profesor.nombre}} {{asig.profesor.ap_paterno}}</p>
+                    <span >
+                      <ion-button color="warning" id="open-modal" (click)="buscarAsig(asig.codigo_asig, true)">Buscar</ion-button>
+                      <ion-button color="danger" (click)="asigSheet(asig.codigo_asig)">Eliminar</ion-button>
+                    </span>
+                  </span>
+                </span>
+  
+            </ion-list>
+          </section>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+  
+    <ion-modal [backdropDismiss]="false" *ngIf="buscar_usuario" [isOpen]="isModalOpen">
+      <ion-backdrop> 
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Datos Usuario</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="close_bd(false)">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <section *ngIf="chequeo"  style="display:flex !important; align-items: center; align-content: center; justify-content: center; flex-direction: column; margin-bottom: 6% !important; width: 100% !important; height: 100% !important;">
+                <form *ngIf="es_user" [formGroup]="user" (ngSubmit)="anadirUser()" style="width: 100% !important; height:90% !important;">
+                  <ion-item>
+                    <ion-label position="stacked">Rut</ion-label>
+                    <ion-input type="text"  placeholder="Ingrese rut" formControlName="rut"  [disabled]="user.valid"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Nombre: </ion-label>
+                    <ion-input type="text" placeholder="Ingrese nombre" formControlName="nombre"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Apellido Paterno: </ion-label>
+                    <ion-input type="text" placeholder="Ingrese apellido paterno" formControlName="ap_paterno"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Fecha nacimiento</ion-label>
+                    <ion-input type="date" placeholder="Ingrese fecha nacimiento" formControlName="fecha_nac"></ion-input>
+                  </ion-item>
+                  <ion-item *ngIf="user.value.tipo_usuario== 'alumno'">
+                    <ion-label position="stacked">Semestre</ion-label>
+                    <ion-input type="number" placeholder="Ingrese semestre" formControlName="semestre"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Email</ion-label>
+                    <ion-input type="email" placeholder="Ingrese email" formControlName="email"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Contraseña</ion-label>
+                    <ion-input type="password" placeholder="Ingrese contraseña" formControlName="password"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Repita Contraseña</ion-label>
+                    <ion-input type="password" placeholder="Ingrese nuevamente contraseña" [(ngModel)]="verificar_password" [ngModelOptions]="{standalone: true}"></ion-input>
+                  </ion-item>
+                  <ion-list>
+                    <ion-item>
+                      <ion-select formControlName="tipo_usuario" interface="popover" placeholder="Escoge un tipo de usuario">
+                        <ion-select-option value="alumno">Alumno</ion-select-option>
+                        <ion-select-option value="profesor">Profesor</ion-select-option>
+                        <ion-select-option value="administrador">Administrador</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                  <ion-list *ngIf="user.value.tipo_usuario =='alumno'">
+                    <ion-item >
+                      <ion-select formControlName="nombre_carrera" interface="popover" placeholder="Escoge la carrera">
+                        <span>
+                          <ion-item>
+                            <ion-select-option value="Analista Programador Computacional">Analista Programador Computacional</ion-select-option>
+                            <ion-select-option value="Tecnico en Farmacia">Tecnico en Farmacia</ion-select-option>
+                            <ion-select-option value="Animacion Digital">Animación Digital</ion-select-option>
+                            <ion-select-option value="Ingenieria en Construcion">Ingeniería en Construcción</ion-select-option>
+                            <ion-select-option value="Ingenieria en Sonido">Ingeniería en Sonido</ion-select-option>
+                            <ion-select-option value="Auditoria">Auditoría</ion-select-option>
+                            <ion-select-option value="Comercio Exterior">Comercio Exterior</ion-select-option>
+                          </ion-item>
+                        </span>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                  <span style="display:flex; flex-direction:row; justify-content: center; align-items: center; align-content: center">
+                    <ion-button color="warning" (click)="modificar()">MODIFICAR</ion-button>
+                    <ion-button color="tertiary" (click)="limpiar()">LIMPIAR</ion-button>
+                  </span>
+                
+                </form>
+              </section>
+          </ion-content>
+        </ng-template>
+      </ion-backdrop>
+    </ion-modal>
+    <ion-modal [backdropDismiss]="false" *ngIf="buscar_asigna" [isOpen]="isModalOpen">
+      <ion-backdrop> 
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Datos Asignatura</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="close_bd(false)">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <section *ngIf="chequeoAsig"  style="display:flex !important; align-items: center; align-content: center; justify-content: center; flex-direction: column; margin-bottom: 6% !important; width: 100% !important; height: 100% !important;">
+                <form [formGroup]="asignatura" (ngSubmit)="anadirAsignaturas()" style="width: 100% !important; height:90% !important;">
+                  <ion-input type="hidden" placeholder="Ingrese codigo de la asignatura" formControlName="codigo_asig" value="0" [disabled]="true" ></ion-input>
+                  
+                  <ion-item>
+                    <ion-label position="stacked">Nombre asignatura</ion-label>
+                    <ion-input type="text" placeholder="Ingrese nombre de la asignatura" formControlName="nom_asig"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Sigla asignatura</ion-label>
+                    <ion-input type="text" placeholder="Ingrese sigla de asignatura" formControlName="sigla_asig"></ion-input>
+                  </ion-item>
+                 
+                  <ion-item>
+                    <ion-label position="stacked">Semestre</ion-label>
+                    <ion-input type="number" placeholder="Ingrese semestre" formControlName="semestre"></ion-input>
+                  </ion-item>
+  
+                  <ion-list>
+                    <ion-item>
+                      <ion-select formControlName="profesor" interface="popover" placeholder="Selecciona a un profesor">
+                        <span *ngFor="let p of personas">
+                          <ion-item *ngIf="p.tipo_usuario == 'profesor'">
+                            <ion-select-option> 
+                              
+                                {{p.nombre}} {{p.ap_paterno}}
+                            
+                            </ion-select-option>
+                            <ion-input type="hidden" value="p.rut"></ion-input>
+                          </ion-item>
+                        </span>
+                        
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+  
+                  <ion-list>
+                    <ion-item>
+                      <ion-select formControlName="nombre_carrera" interface="popover" placeholder="Escoge las carreras" [multiple]="true">
+                        <span>
+                          <ion-item>
+                            <ion-select-option value="Analista Programador Computacional">Analista Programador Computacional</ion-select-option>
+                            <ion-select-option value="Tecnico en Farmacia">Tecnico en Farmacia</ion-select-option>
+                            <ion-select-option value="Animacion Digital">Animación Digital</ion-select-option>
+                            <ion-select-option value="Ingenieria en Construcion">Ingeniería en Construcción</ion-select-option>
+                            <ion-select-option value="Ingenieria en Sonido">Ingeniería en Sonido</ion-select-option>
+                            <ion-select-option value="Auditoria">Auditoría</ion-select-option>
+                            <ion-select-option value="Comercio Exterior">Comercio Exterior</ion-select-option>
+                          </ion-item>
+                        </span>
+                        
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                  
+                  <span style="display:flex; flex-direction:row; justify-content: center; align-items: center; align-content: center">
+                    <ion-button color="warning" (click)="modificarAsig()">MODIFICAR</ion-button>
+                    <ion-button color="tertiary" (click)="limpiarAsig()">LIMPIAR</ion-button>
+                  </span>
+                
+                </form>
+              </section>
+          </ion-content>
+        </ng-template>
+      </ion-backdrop>
+    </ion-modal>
+    <ion-modal [backdropDismiss]="false" *ngIf="agregar == true" [isOpen]="isModalOpen">
+      <ion-backdrop>  
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Datos Usuario</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="close_bd(false)">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <section style="display:flex !important; align-items: center; align-content: center; justify-content: center; flex-direction: column; margin-bottom: 6% !important; width: 100% !important; height: 100% !important;">
+                <form [formGroup]="user" (ngSubmit)="anadirUser()" style="width: 100% !important; height:90% !important;">
+                  <ion-list>
+                    <ion-item>
+                      <ion-select formControlName="tipo_usuario" interface="popover" placeholder="Escoge un tipo de usuario">
+                        <ion-select-option value="alumno">Alumno</ion-select-option>
+                        <ion-select-option value="profesor">Profesor</ion-select-option>
+                        <ion-select-option value="administrador">Administrador</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                  <ion-item [disabled]>
+                    <ion-label position="stacked">Rut</ion-label>
+                    <ion-input type="text" placeholder="Ingrese rut" formControlName="rut" ></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Nombre: </ion-label>
+                    <ion-input type="text" placeholder="Ingrese nombre" formControlName="nombre"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Apellido Paterno: </ion-label>
+                    <ion-input type="text" placeholder="Ingrese apellido paterno" formControlName="ap_paterno"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Fecha nacimiento</ion-label>
+                    <ion-input [max]="today" required date maxDate="today" displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" type="date" placeholder="Ingrese fecha nacimiento" required formControlName="fecha_nac"></ion-input>
+                  </ion-item>
+                  <ion-item *ngIf="user.value.tipo_usuario =='alumno'">
+                    <ion-label position="stacked">Semestre</ion-label>
+                    <ion-input type="number" placeholder="Ingrese semestre" formControlName="semestre"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Email</ion-label>
+                    <ion-input type="email" placeholder="Ingrese email" formControlName="email"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Contraseña</ion-label>
+                    <ion-input type="password" placeholder="Ingrese contraseña" formControlName="password"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Repita Contraseña</ion-label>
+                    <ion-input type="password" placeholder="Ingrese nuevamente contraseña" [(ngModel)]="verificar_password" [ngModelOptions]="{standalone: true}" minlength="6" pattern="^((?!\s{1,}).)*$"></ion-input>
+                  </ion-item>
+                  
+                  <ion-list *ngIf="user.value.tipo_usuario =='alumno'">
+                    <ion-item >
+                      <ion-select formControlName="nombre_carrera" interface="popover" placeholder="Escoge la carrera" >
+                        <span>
+                          <ion-item>
+                            <ion-select-option value="Analista Programador Computacional">Analista Programador Computacional</ion-select-option>
+                            <ion-select-option value="Tecnico en Farmacia">Tecnico en Farmacia</ion-select-option>
+                            <ion-select-option value="Animacion Digital">Animación Digital</ion-select-option>
+                            <ion-select-option value="Ingenieria en Construcion">Ingeniería en Construcción</ion-select-option>
+                            <ion-select-option value="Ingenieria en Sonido">Ingeniería en Sonido</ion-select-option>
+                            <ion-select-option value="Auditoria">Auditoría</ion-select-option>
+                            <ion-select-option value="Comercio Exterior">Comercio Exterior</ion-select-option>
+                          </ion-item>
+                        </span>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                  
+                  <span style="display: flex; justify-content: center; text-align:center">
+                    <ion-button type="submit" [disabled]="!user.valid || !verificar_password">Agregar</ion-button>
+                  </span>
+                
+                </form>
+              </section>
+          </ion-content>
+        </ng-template>
+      </ion-backdrop>
+    </ion-modal>
+    <ion-modal [backdropDismiss]="false" *ngIf="agregarAsig == true" [isOpen]="isModalOpen">
+      <ion-backdrop>  
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Datos Asignatura</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="close_bd(false)">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+
+            <section style="display:flex !important; align-items: center; align-content: center; justify-content: center; flex-direction: column; margin-bottom: 6% !important; width: 100% !important; height: 100% !important;">
+                <form [formGroup]="asignatura" (ngSubmit)="anadirAsignaturas()" style="width: 100% !important; height:90% !important;">
+                  <ion-input type="hidden" placeholder="Ingrese codigo de la asignatura" formControlName="codigo_asig" value="0" [disabled]="true" ></ion-input>
+                  <ion-item>
+                    <ion-label position="stacked">Nombre asignatura</ion-label>
+                    <ion-input type="text" placeholder="Ingrese nombre de la asignatura" formControlName="nom_asig"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Sigla asignatura</ion-label>
+                    <ion-input type="text" placeholder="Ingrese sigla de asignatura" formControlName="sigla_asig"></ion-input>
+                  </ion-item>
+                 
+                  <ion-item>
+                    <ion-label position="stacked">Semestre</ion-label>
+                    <ion-input type="number" placeholder="Ingrese semestre" formControlName="semestre"></ion-input>
+                  </ion-item>
+                  
+                  
+
+  
+                  <ion-list>
+                    <ion-item>
+                      <ion-select [(ngModel)]="nomcom_prof" formControlName="profesor" interface="popover" placeholder="Seleccione a un profesor" >
+                        <span *ngFor="let p of personas">
+                          <ion-item *ngIf="p.tipo_usuario == 'profesor'">
+                            <ion-select-option > 
+                              
+                                {{p.nombre}} {{p.ap_paterno}}
+                            
+                            </ion-select-option>
+                            <ion-input type="hidden" value="p.rut"></ion-input>
+                          </ion-item>
+                        </span>
+                        
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+  
+                  <ion-list>
+                    <ion-item>
+                      <ion-select formControlName="nombre_carrera" interface="popover" placeholder="Escoge las carreras" [multiple]="true">
+                        <span>
+                          <ion-item>
+                            <ion-select-option value="Analista Programador Computacional">Analista Programador Computacional</ion-select-option>
+                            <ion-select-option value="Tecnico en Farmacia">Tecnico en Farmacia</ion-select-option>
+                            <ion-select-option value="Animacion Digital">Animación Digital</ion-select-option>
+                            <ion-select-option value="Ingenieria en Construcion">Ingeniería en Construcción</ion-select-option>
+                            <ion-select-option value="Ingenieria en Sonido">Ingeniería en Sonido</ion-select-option>
+                            <ion-select-option value="Auditoria">Auditoría</ion-select-option>
+                            <ion-select-option value="Comercio Exterior">Comercio Exterior</ion-select-option>
+                          </ion-item>
+                        </span>
+                        
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                  
+                  <span style="display: flex; justify-content: center; text-align:center">
+                    <ion-button type="submit" [disabled]="!asignatura.valid ">Agregar</ion-button>
+                  </span>
+                
+                </form>
+              </section>
+          </ion-content>
+        </ng-template>
+      </ion-backdrop>
+    </ion-modal>
+
+  
+</ion-content>
+
+
+
+  
+
+

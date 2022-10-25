@@ -1,0 +1,14 @@
+.img-responsive{
+    @media(min-width: 480px) {
+        width: 60% !important;
+        height: 40% !important;
+    }
+    @media(min-width: 700px) {
+        width: 50% !important;
+        height: 40% !important;
+    }
+    @media(min-width: 1150px) {
+        width: 50% !important;
+        height: 60% !important;
+    }
+}

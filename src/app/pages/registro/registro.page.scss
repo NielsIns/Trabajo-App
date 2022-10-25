@@ -1,0 +1,8 @@
+ion-card{
+    width: 70%;
+
+    @media (max-width: 576px) {
+        width: 90% !important;
+    }
+    
+}

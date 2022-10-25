@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="end"><img alt="logo" class="tamanio-logo" src="../../../assets/img/logoregistro.png"></ion-title>
+    <ion-button slot="start" fill="clear" routerLink="/login"><ion-icon name="arrow-back-outline" style="color: black;"></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-content-1 ic-2">
+  <div style="display: flex; align-items: center; align-content: center;">
+    <ion-card >
+      <ion-card-header>
+        <ion-title class="ion-tt-reg" style="text-align: center; margin-top:1%; margin-bottom: 3%; font-weight: bold; ">Registro</ion-title>
+      </ion-card-header>
+      <ion-card-content >
+
+        <form [formGroup]="alumno" (ngSubmit)="registrar()">
+          <ion-item>
+            <ion-label position="stacked">Rut:</ion-label>
+            <ion-input type="text" placeholder="Ej: 11.111.111-1" formControlName="rut"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Nombre: </ion-label>
+            <ion-input type="text" placeholder="Ej: Christopher" formControlName="nombre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Apellido paterno: </ion-label>
+            <ion-input type="text" placeholder="Ej: Nuñez" formControlName="ap_paterno"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Fecha nacimiento</ion-label>
+            <ion-input [max]="today"  required date maxDate="today" displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" type="date" placeholder="Ingrese fecha nacimiento" required formControlName="fecha_nac"></ion-input>
+            
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="stacked">Semestre</ion-label>
+            <ion-input type="number" placeholder="Ingrese semestre" formControlName="semestre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input type="email" placeholder="persona@duocuc.cl" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input type="password" placeholder="Ingrese contraseña" formControlName="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Repita Contraseña</ion-label>
+            <ion-input type="password" placeholder="Ingrese nuevamente contraseña" [(ngModel)]="verificar_password" [ngModelOptions]="{standalone: true}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select formControlName="nombre_carrera" interface="popover" placeholder="Escoge las carreras" >
+              <span>
+                <ion-item>
+                  <ion-select-option value="Analista Programador Computacional">Analista Programador Computacional</ion-select-option>
+                  <ion-select-option value="Tecnico en Farmacia">Tecnico en Farmacia</ion-select-option>
+                  <ion-select-option value="Animacion Digital">Animación Digital</ion-select-option>
+                  <ion-select-option value="Ingenieria en Construcion">Ingeniería en Construcción</ion-select-option>
+                  <ion-select-option value="Ingenieria en Sonido">Ingeniería en Sonido</ion-select-option>
+                  <ion-select-option value="Auditoria">Auditoría</ion-select-option>
+                  <ion-select-option value="Comercio Exterior">Comercio Exterior</ion-select-option>
+                </ion-item>
+              </span>
+            </ion-select>
+          </ion-item>
+          <ion-button id="right-end" style="margin-top: 3%;" type="submit" class="button-color" expand="full" [disabled]="!alumno.valid">REGISTRAR</ion-button>
+    
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  
+
+</ion-content>

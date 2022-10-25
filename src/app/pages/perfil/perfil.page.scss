@@ -1,0 +1,35 @@
+.ion-content-perfil{
+    --background: none;
+    background-image: url('../../../assets/img/Diseño sin título (2).png') !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .ic-2 {
+        --background: linear-gradient(90deg, rgba(183, 183, 4, 0.235),rgba(3, 19, 189, 0), rgba(183, 183, 4, 0.313)) !important;
+    }
+}
+
+.ion-item-mg{
+    margin-bottom: 3%;
+    padding-right: 3%;
+}
+
+ion-content{
+    margin-top: 6%;
+    margin-bottom: 6%;
+    color: rgb(0, 0, 0);
+    ion-card{
+
+        background-color: #f7dc63d5;
+        width: 60%;
+        @media (max-width: 576px) {
+            width: 90%;
+            
+        }
+        .item-background-color{
+            --ion-item-background:#f7dc6300;
+        }
+    }
+    
+}

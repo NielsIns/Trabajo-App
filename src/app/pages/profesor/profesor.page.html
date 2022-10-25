@@ -1,0 +1,88 @@
+
+
+
+<ion-content class="ion-content-1 ic-2" style="justify-content: center; ">
+  
+
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <div style="flex-direction: column;">
+          <div style=" display:flex ;justify-content: center; align-items: center; margin-top:4%; margin-bottom: 3%;">
+            <img  alt="logo" src="../../../assets/img/clipboard (1).png" style="width: 40%; height: 40%;">
+          </div>
+          <!--agregar interpolacion de nombre-->
+          <span style="margin-bottom: 2%; margin-top: 3%">
+            <ion-title style="text-align: center;">Profesor</ion-title>
+          </span>
+        </div>
+
+        <ion-button expand="full" color="dark" (click)="listar_asignaturas()" >
+          Mostrar Asignaturas
+        </ion-button>
+
+      </ion-card-header>
+      <ion-card-content>
+        <div class="padding-a" style="margin-top: 2%;">
+          <div style="text-align: center;">
+            <section *ngIf="mostrar_lista_asignaturas " style="display:flex;text-align: center; margin-top: 1%; flex-direction: column;">
+
+                <h1>Lista de asignaturas</h1>
+                <section *ngFor="let asig of asignaturas">
+                  <section *ngIf="asig.profesor.rut == rut">
+                    <ion-list >
+                        <span>
+                          <span>
+                            <p>Código asignatura: {{asig.codigo_asig}}- Nombre asignatura: {{asig.nom_asig}} - Sigla asignatura: {{asig.sigla_asig}}</p>
+                            <p>Semestre: {{asig.semestre}}</p>
+                            <p>Profesor: {{asig.profesor.nombre}} {{asig.profesor.ap_paterno}}</p>
+                            <p>Carreras: {{asig.nombre_carrera}}</p>
+                            
+
+                          </span>
+                          
+                          <ion-button color="warning" (click)="anadirAsistencia(asig.codigo_asig, true)">
+                            Comenzar clase
+                          </ion-button>
+                                        
+                        </span>
+                    </ion-list>
+                  </section>
+                </section>
+            </section>
+            
+            
+          </div>      
+        </div>
+        <ion-modal [backdropDismiss]="false" *ngIf="comenzar_clase" [isOpen]="isModalOpen">
+          <ion-backdrop> 
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Clase Iniciada</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="close_bd(false)">Close</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content>
+                <section  style="align-items: center; align-content: center; justify-content: center; flex-direction: column; margin-bottom: 6% !important; width: 100% !important; height: 100% !important;">
+                  <ngx-qrcode [width]=300 [elementType]="elementType" [value]="value"></ngx-qrcode>
+  
+                  <span style="text-align:center;align-items: center; justify-content:center; align-content:center;">
+                    <p>Código QR: </p>
+                    <p>{{value}}</p>
+                  </span>
+                  <ion-button expand="full" (click)="generarCodigo()" [disabled]="isEnabled == false">Iniciar clase</ion-button>
+                </section>
+              </ion-content>
+            </ng-template>
+          </ion-backdrop>
+        </ion-modal>
+        
+      </ion-card-content>
+    </ion-card>
+  
+  </div>
+  
+</ion-content>

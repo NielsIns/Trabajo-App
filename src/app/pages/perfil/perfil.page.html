@@ -1,0 +1,60 @@
+
+
+
+<ion-content class=" ion-content-perfil ic-2" style="justify-content: center;  ">
+  
+
+  <div>
+    <ion-card >
+      <ion-card-header>
+        <div style="flex-direction: column;">
+          <div style=" display:flex ;justify-content: center; align-items: center; margin-top:4%; margin-bottom: 1%;">
+            <img  alt="logo" src="../../../assets/icon/usuario_prof.png" style="width: 40%; height: 40%;">
+          </div>
+          <!--agregar interpolacion de nombre-->
+          <span *ngIf="tipo_usuario == 'alumno'" style=" margin-top: 3%; font-size:x-large !important;">
+            <ion-title style="text-align: center; font-size:x-large !important;">Datos Alumno</ion-title>
+          </span>
+          <span *ngIf="tipo_usuario == 'administrador'" style=" margin-top: 3%; font-size:x-large !important;">
+            <ion-title style="text-align: center; font-size:x-large !important;">Datos Administrador</ion-title>
+          </span>
+          <span *ngIf="tipo_usuario == 'profesor'" style=" margin-top: 3%; font-size:x-large !important;">
+            <ion-title style="text-align: center; font-size:x-large !important;">Datos Profesor</ion-title>
+          </span>
+        </div>
+      </ion-card-header>
+      <ion-item class="ion-item-mg item-background-color" style="height: 0%;"></ion-item>
+      <ion-card-content>
+        <div class="padding-a" >
+          <div style="flex-direction:column; ">
+            
+            <section style="text-align: center !important;display: flex; flex-direction:column; flex-flow: column wrap">
+              <span style="font-size: large !important; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                Rut: {{rut}}
+              </span>
+              <span style="font-size: large !important; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                Correo: {{correo}}
+              </span>
+              <span style="font-size: large !important; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                Nombre Completo:  {{nombre}} {{apellido}}
+              </span>
+              <span style="font-size: large !important; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                Fecha Nacimiento:  {{fecha_nac}}
+              </span>
+              
+              <span style="font-size: large !important; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" *ngIf="tipo_usuario == 'alumno'">
+                Carrera: {{carrera}}
+              </span>
+            </section>
+            
+            
+          </div>      
+        </div>
+        
+      </ion-card-content>
+      <ion-item class="ion-item-mg item-background-color"></ion-item>
+    </ion-card>
+  
+  </div>
+  
+</ion-content>

@@ -1,0 +1,89 @@
+div{
+
+    h1{
+        @media (max-width: 576px) {
+            font-size: smaller !important;
+        }
+
+    }
+    p{
+        @media (max-width: 576px) {
+            font-size: small;
+        }
+    }
+
+    
+    
+}
+
+ion-modal::part(backdrop) {
+    background: rgba(209, 213, 219);
+    opacity: 1;
+  }
+
+  .ion-content-admin{
+      --background: none;
+      background-image: url('../../../assets/img/invertido.png') !important;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+  }
+  
+
+
+  
+
+
+ion-content{
+
+
+    padding: 6% !important;
+
+    ion-card{
+        width: 60%;
+        
+        margin-top: 6%;
+        margin-bottom: 6%;
+        @media (max-width: 576px) {
+            width: 90%;
+            
+            
+        }
+
+        ion-card-content{
+            div{
+                padding: 0% !important;
+
+                section {
+                    ion-button{
+                        width:100%;
+                    }
+
+                            
+                        
+                    }
+                }
+            }
+        
+    }
+    
+}
+
+ion-action-sheet{
+    div{
+        display:none;
+        justify-content: none;
+        align-items: none;
+        align-content: none;
+    }
+
+}
+
+
+.se-column{
+    display: flex !important;
+    flex-direction: row !important;
+    @media (max-width: 650px){
+        flex-direction: column !important;
+    }
+}

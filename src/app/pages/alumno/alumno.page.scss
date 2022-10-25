@@ -1,0 +1,15 @@
+ion-content{
+    ion-card{
+        width: 60%;
+        margin-top: 6%;
+        margin-bottom: 6%;
+        @media (max-width: 576px) {
+            width: 90%;
+            
+        }
+    }
+
+    
+    
+}
+

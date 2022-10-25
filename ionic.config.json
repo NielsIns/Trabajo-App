@@ -1,0 +1,7 @@
+{
+  "name": "proyectoQr",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

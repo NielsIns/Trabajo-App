@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-title-1" slot="start">Bienvenido: {{usuario.nombre}} {{usuario.ap_paterno}}</ion-title>
+    <ion-title slot="end"><img alt="logo" class="tamanio-logo" src="../../../assets/img/logoregistro.png"></ion-title>
+      
+  </ion-toolbar>
+</ion-header>
+<ion-menu class="fondo-menu" contentId="main-content" type="overlay" menuId="main-content">
+  <ion-header>
+    <ion-toolbar color="warning">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+      <ion-menu-toggle>
+        <ion-button style="color: black;" expand="full" fill="clear" routerLink='administrador/{{usuario.rut}}' *ngIf="usuario.tipo_usuario == 'administrador'">
+          <ion-icon name="file-tray-stacked-outline"></ion-icon>
+          Administración
+          
+        </ion-button>
+    
+        <ion-button style="color: black;" expand="full" fill="clear" routerLink='alumno/{{usuario.rut}}' *ngIf="usuario.tipo_usuario == 'alumno'">
+          <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+          
+          Asistir a clases
+          
+        </ion-button>
+    
+        <ion-button style="color: black;" expand="full" fill="clear" routerLink='profesor/{{usuario.rut}}' *ngIf="usuario.tipo_usuario == 'profesor'" >
+          <ion-icon name="calendar-outline"></ion-icon>
+          Crear asistencia
+          
+        </ion-button>
+    
+        <ion-button style="color: black;" expand="full" fill="clear" routerLink='perfil/{{usuario.rut}}' >
+          <ion-icon name="person-circle-outline"></ion-icon>
+          Perfil
+        </ion-button>
+    
+        <ion-button style="color: black;" expand="full" fill="clear" (click)="logout()">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          Cerrar sesión
+        </ion-button>
+      </ion-menu-toggle>
+
+        
+  </ion-content>
+
+</ion-menu>
+
+<ion-router-outlet id="main-content"></ion-router-outlet>
+
+
+
+
+
+<ion-content>
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button (click)="logout()">
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-tab-button>
+      
+      <ion-tab-button tab="profesor/{{usuario.rut}}" *ngIf="usuario.tipo_usuario == 'profesor'">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label>Clases</ion-label>
+        
+      </ion-tab-button>
+
+      <ion-tab-button tab="alumno/{{usuario.rut}}" *ngIf="usuario.tipo_usuario == 'alumno'">
+        <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+        <ion-label>Asistir a clases</ion-label>
+        
+      </ion-tab-button>
+
+      <ion-tab-button tab="administrador/{{usuario.rut}}" *ngIf="usuario.tipo_usuario == 'administrador'">
+        <ion-icon name="file-tray-stacked-outline"></ion-icon>
+        <ion-label>Administrar</ion-label>
+        
+      </ion-tab-button>
+
+      <ion-tab-button tab="perfil/{{usuario.rut}}">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-tab-button>
+
+
+      
+
+    </ion-tab-bar>
+  </ion-tabs>
+
+</ion-content>
